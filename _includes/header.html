@@ -1,0 +1,26 @@
+<header>
+  <div class="container">
+    <div class="row top-header">
+      <div class="twelve columns">
+
+        <div>
+          <h1><a href="{{ site.baseurl }}/">{{ site.title }}</a></h1>
+
+          {% for page in site.html_pages %}
+            {% if page.title %}
+            {% unless forloop.first %}
+            <span> - </span>
+            {% endunless %}
+            <a class="page-menu-item" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="deckhead">
+          <p>On things like {{ site.description | strip }}.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</header>
