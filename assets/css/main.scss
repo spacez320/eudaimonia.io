@@ -57,6 +57,10 @@ time {
   font-style: italic;
 }
 
+ol, ul {
+  list-style-position: outside;
+}
+
 .top-header {
   margin-bottom: 3em;
 
@@ -64,7 +68,7 @@ time {
     margin-bottom: 0.25em;
   }
 
-  .deckhead {
+  .masthead {
     margin-top: 0.25em;
 
     p {
@@ -93,15 +97,15 @@ time {
   hr {
     margin-bottom: 1em;
   }
+
+  .deckhead {
+    font-style: italic;
+  }
 }
 
 .bottom-footer {
   margin-bottom: 2em;
   margin-top: 2em;
-
-  ul {
-    list-style-type: none;
-  }
 
   p, ul {
     text-align: center;
