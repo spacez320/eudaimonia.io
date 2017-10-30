@@ -130,6 +130,9 @@ host the command you are attempting..
 
 	> docker exec --tty --interactive acdefg123... /bin/bash
 
+Note that, most of the time, Docker containers must run a process that stays in
+the foreground.
+
 Tooling
 -------
 
@@ -237,3 +240,7 @@ Examples
 - Show all files that have changed within the containers since build.
 
       > docker diff <container-id>
+
+- Follow the logs of an actively running container.
+
+			> docker logs --follow <container-id>

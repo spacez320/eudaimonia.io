@@ -3,7 +3,7 @@ layout: notes
 title: Terraform notes
 ---
 
-The following are Notes about the Terraform infrastructure management tool.
+The following are notes about the Terraform infrastructure management tool.
 
 Terraform code is a collection of configuration files that define
 infrastructure resources on remote providers, like cloud platforms or local
@@ -242,9 +242,8 @@ Aftewards, you'll need to perform the module retrieval.
 To update modules, use the `-update` flag.
 
 Variables can be retrieved from inside modules by using the syntax
-`"${module.[module_name].[value]}"`.
-
-Variables defined within modules become the module's parameters.
+`"${module.[module_name].[value]}"`. Variables defined within modules become
+the module's parameters.
 
 Plugins
 -------
