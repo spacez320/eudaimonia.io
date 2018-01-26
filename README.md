@@ -1,7 +1,8 @@
 eudaimonia.io
 =============
 
-- developed in [Vagrant](https://vagrantup.com)
-- built with:
+I built this with:
+
   - [Jekyll](https://jekyllrb.com)
   - [Skeleton](http://getskeleton.com/)
+  - [Vagrant](https://vagrantup.com)
