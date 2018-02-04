@@ -1,6 +1,7 @@
 ---
-layout: notes
+layout: post
 title: Docker notes
+categories: notes
 ---
 
 The following are notes on how Docker works and is administrated.

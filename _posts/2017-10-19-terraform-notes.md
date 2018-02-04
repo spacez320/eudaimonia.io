@@ -1,9 +1,8 @@
 ---
-layout: notes
+layout: post
 title: Terraform notes
+categories: notes
 ---
-
-The following are notes about the Terraform infrastructure management tool.
 
 Terraform code is a collection of configuration files that define
 infrastructure resources on remote providers, like cloud platforms or local

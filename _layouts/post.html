@@ -21,6 +21,16 @@ layout: default
             </span>
           {% endif %}
         </p>
+
+        {% if page.categories contains 'notes' %}
+        <p class="deckhead">
+          This is a page of notes on a particular technology. It's meant to
+          describe the subject in a succient manner and comes from a
+          collection of important points derived from a concentrated study.
+          It should be useful as reference or getting a high-level
+          understanding of the subject quickly.
+        </p>
+        {% endif %}
       </header>
 
       <div itemprop="articleBody">

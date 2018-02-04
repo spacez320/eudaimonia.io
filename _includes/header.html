@@ -2,10 +2,14 @@
   <div class="container">
     <div class="row top-header">
       <div class="twelve columns">
-
         <div>
+          {% if page.layout != 'post' %}
           <h1><a href="{{ site.baseurl }}/">{{ site.title }}</a></h1>
+          {% else %}
+          <a href="{{ site.baseurl }}/">Home</a>
+          <span> - </span>
 
+          {% endif %}
           {% for page in site.html_pages %}
             {% if page.title %}
             {% unless forloop.first %}
@@ -14,12 +18,17 @@
             <a class="page-menu-item" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
             {% endif %}
           {% endfor %}
+          <span> - </span>
+          <a href="https://github.com/spacez320">Github</a>
+          <span> - </span>
+          <a href="https://twitter.com/spacez320">Twitter</a>
         </div>
 
+        {% if page.layout != 'post' %}
         <div class="masthead">
           <p>On things like {{ site.description | strip }}.</p>
         </div>
-
+        {% endif %}
       </div>
     </div>
   </div>

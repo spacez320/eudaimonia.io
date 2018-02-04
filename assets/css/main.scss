@@ -4,8 +4,8 @@
 @charset "utf-8";
 
 $black: #4d4d4d;
-$gray: #cccccc;
 $blue: #2d4B5a;
+$gray: #cccccc;
 $white: #fcfcfc;
 
 a {
@@ -57,10 +57,6 @@ time {
   font-style: italic;
 }
 
-ol, ul {
-  list-style-position: outside;
-}
-
 .top-header {
   margin-bottom: 3em;
 
@@ -99,7 +95,13 @@ ol, ul {
   }
 
   .deckhead {
+    border-left: 1px $gray solid;
     font-style: italic;
+    margin-bottom: 3em;
+    margin-left: 4%;
+    margin-right: 4%;
+    margin-top: 3em;
+    padding-left: 4%;
   }
 }
 
@@ -110,14 +112,24 @@ ol, ul {
   p, ul {
     text-align: center;
   }
+
+  p.quote {
+    font-style: italic;
+  }
 }
 
+// Tablet, Desktop
 @media (min-width: 700px) {
   .top-header {
     h1 {
       display: inline;
-      margin-right: 4%;
+      margin-right: 2%;
     }
+  }
+
+  .content {
+    padding-left: 4%;
+    padding-right: 4%;
   }
 
   .feed:nth-child(odd) {
