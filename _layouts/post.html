@@ -4,9 +4,7 @@ layout: default
 
 <div class="row post">
   <div class="twelve columns">
-
     <article itemscope itemtype="http://schema.org/BlogPosting">
-
       <header>
         <h1 itemprop="name headline">{{ page.title }}</h1>
         <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
@@ -36,8 +34,6 @@ layout: default
       <div itemprop="articleBody">
         {{ content }}
       </div>
-
     </article>
-
   </div>
 </div>
