@@ -4,7 +4,6 @@ layout: default
 
 {% for post in site.posts %}
 <div class="row feed">
-
   <div class="six columns feed-left">
     <h2>
       <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
@@ -19,6 +18,5 @@ layout: default
   <div class="six columns feed-right">
     {{ post.excerpt }}
   </div>
-
 </div>
 {% endfor %}

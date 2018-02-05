@@ -8,8 +8,8 @@
           {% else %}
           <a href="{{ site.baseurl }}/">Home</a>
           <span> - </span>
-
           {% endif %}
+
           {% for page in site.html_pages %}
             {% if page.title %}
             {% unless forloop.first %}
