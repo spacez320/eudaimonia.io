@@ -10,7 +10,7 @@ of Vagrant that introduce extensibility into their build process, and I want to
 talk about the motivations and nuances behind using them, especially for the
 lone developer.
 
-### Why use Vagrant at all?
+## Why use Vagrant at all?
 
 The VirtualBox + Vagrant combination is a really convenient and clean way to
 set up isolated environments for any project you want to develop and test
@@ -26,7 +26,7 @@ Why clean? You don't pollute your workstation with install dependencies.
 Obviously this is useful for teams who want help standardizing their workflow
 across multiple devs, but I also find it useful for my own, lonesome endeavors.
 
-### Why build a base box? The problem with out-of-the-box Vagrant.
+## Why build a base box? The problem with out-of-the-box Vagrant.
 
 Some aspects of Vagrant can be cumbersome to deal with at setup time, and some
 of the issues can be dependent on the platform you run it on. These
@@ -45,7 +45,7 @@ The key benefits of making your own base box have to do with solving all of
 these issues just once and lowering the amount of time it takes to start new
 projects with Vagrant.
 
-### Setting up your base box.
+## Setting up your base box.
 
 As with any Vagrant project, you have to start with a `Vagrantfile`, and the
 initialization command is a good place to start.
@@ -164,7 +164,7 @@ find that boxes you build from it won't be accessible.
 config.ssh.insert_key = false
 ```
 
-### Building your base box.
+## Building your base box.
 
 Vagrant's utilities take over from here, and this is largely a repeat of what
 is available in Vagrant's documentation.
@@ -231,7 +231,7 @@ supercharged-fedora-base    (virtualbox, 0)
 Voila -- the box is available to us to add to future Vagrantfiles as we see
 fit [^3].
 
-### Further reading.
+## Further reading.
 
 - [https://www.vagrantup.com/docs/boxes/base.html](https://www.vagrantup.com/docs/boxes/base.html)
 - [https://www.vagrantup.com/docs/virtualbox/boxes.html](https://www.vagrantup.com/docs/virtualbox/boxes.html)

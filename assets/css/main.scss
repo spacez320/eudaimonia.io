@@ -17,6 +17,12 @@ a {
   }
 }
 
+blockquote {
+  border-left: 1px $gray solid;
+  font-style: italic;
+  padding-left: 2%;
+}
+
 body {
   background-color: $white;
   color: $black;
@@ -31,7 +37,7 @@ h1 {
 
 h2 {
   font-size: 1.5em;
-  margin-bottom: 0.5em;
+  //margin-bottom: 0.5em;
 }
 
 h3 {
@@ -50,7 +56,9 @@ hr {
 }
 
 li {
-  margin-bottom: 0;
+  p {
+    display: inline;
+  }
 }
 
 time {
@@ -85,7 +93,6 @@ time {
 
 .post {
   h1 {
-    display: inline;
     margin-bottom: 0;
     margin-right: 4%;
   }
@@ -94,7 +101,12 @@ time {
     margin-bottom: 1em;
   }
 
-  .deckhead {
+  table {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  deckhead {
     border-left: 1px $gray solid;
     font-style: italic;
     margin-bottom: 3em;
@@ -116,6 +128,10 @@ time {
   p.quote {
     font-style: italic;
   }
+}
+
+.deckhead {
+  font-style: italic;
 }
 
 // Tablet, Desktop

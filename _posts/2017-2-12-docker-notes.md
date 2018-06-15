@@ -10,13 +10,13 @@ Docker provides the following improvements to applications and their
 life-cycles:
 
 - Forcing applications to be more ephemeral as containers are quickly destroyed
-	and recreated.
+  and recreated.
 - Improving the run-time footprint of applications by making them more lean.
 - Providing abstractions to developers so as to control application resources
-	and dependencies without affecting the host system (and bothering the people
-	that maintain them).
+  and dependencies without affecting the host system (and bothering the people
+  that maintain them).
 - The production specific instances themselves can be tested before being
-	transferred to their production environments.
+  transferred to their production environments.
 
 Common candidates for Docker-isation are services that are stateless, or store
 all their state in some external data storage. Docker is built in Go and is an
@@ -30,7 +30,7 @@ Docker employs the following:
 - Linux control groups, a.k.a. cgroups (process isolation).
 - Union file systems (copy-on-write).
 - Namespaces (resources jailing) that control process, network, IPC, mount, UTS
-	usage, and etc.
+  usage, and etc.
 
 Docker also uses a container format backend. The default is libcontainer, but
 it can also use LXC.
@@ -38,16 +38,16 @@ it can also use LXC.
 Docker is made up of the following components:
 
 - **Docker Registry** - storage for Docker Images, Docker Hub being the public
-	one.
+  one.
 - **Docker Engine** (or Docker Daemon) - something that runs containers.
 - **Docker Server** - runs on Docker daemons and receives requests from clients
-	and interacts with the registry.
+  and interacts with the registry.
 - **Docker Client** (or Docker Binary) - accepts user commands and interacts
-	with servers.
+  with servers.
 - **Docker Container** - a running container instance, referenced with a
-	container id or a container name.
+  container id or a container name.
 - **Docker Image** - base from which a container is launched, consists of
-	filesystem layers and metadata.
+  filesystem layers and metadata.
 - **Dockerfile** - a set of instructions in a file that builds an image.
 
 Dockerfiles create a Docker image which create a Docker Container which runs on
@@ -79,17 +79,16 @@ Images can hold a tag for easy reference. Registries will hold images and can
 be pulled and pushed to. The latest version value will always pull the latest
 available image being referenced. Specific references can also be pulled.
 
-
-	docker pull fedora:latest
-	docker pull fedora@sha256:abcdefgh...
+    docker pull fedora:latest
+    docker pull fedora@sha256:abcdefgh...
 
 ## Containers
 
 Containers can use inheritable key/value metadata which are useful for
 container filtering.
 
-	docker run --detach --name test_labels --label="foo=bar" --label="fizz=buzz" centos:latest sleep 1000
-	docker ps --filter="label=foo=bar"
+  docker run --detach --name test_labels --label="foo=bar" --label="fizz=buzz" centos:latest sleep 1000
+  docker ps --filter="label=foo=bar"
 
 Stopped containers will remain registered unless they are deleted or given the
 `--rm` flag at runtime.
@@ -109,13 +108,13 @@ writeable using `--tmpfs` options.
 
 Restart behavior can be 'disabled', 'on-failure', and 'always':
 
-	> docker run --restart=on-failure:3 ... # will attempt to restart a badly exiting instance up to three times.
+    docker run --restart=on-failure:3 ... # will attempt to restart a badly exiting instance up to three times.
 
 When a container is stopped, its inner processes exit. Docker containers
 respond to signals like `SIGTERM` and `SIGKILL`.
 
-	> docker stop --timeout 3. ...  # will attempt to SIGTERM until 30 seconds have passed, and then SIGKILL
-	> docker kill --signal USR1 ... # will send a USR1 signal
+    docker stop --timeout 3 ...  # will attempt to SIGTERM until 30 seconds have passed, and then SIGKILL
+    docker kill --signal USR1 ... # will send a USR1 signal
 
 Containers can also be paused. This keeps their runtime in memory, preserves
 open handles, but stops the container from being CPU scheduled.
@@ -123,13 +122,13 @@ open handles, but stops the container from being CPU scheduled.
 Docker containers can be deeply inspected for creation and runtime information
 using docker inspect.
 
-	> docker inspect abcdefg123...
+    docker inspect abcdefg123...
 
 Attaching to running containers can be done using an `exec` subcommand, or
 tools that interactive with Linux namespaces, assuming that the container can
 host the command you are attempting..
 
-	> docker exec --tty --interactive acdefg123... /bin/bash
+    docker exec --tty --interactive acdefg123... /bin/bash
 
 Note that, most of the time, Docker containers must run a process that stays in
 the foreground.
@@ -179,17 +178,17 @@ but will compete for resources like normal processes. These capabilities must
 be compiled into the kernel before it's possible to use them.
 
 - CPU shares are logical divisions of CPU time. A container can be assigned any
-	part of a max of 1024 shares (default). This defines how time is sliced
-	between containers. A container with twice the CPU shares as another will be
-	scheduled to work twice as much. Can also employ CPU CFS.
+  part of a max of 1024 shares (default). This defines how time is sliced
+  between containers. A container with twice the CPU shares as another will be
+  scheduled to work twice as much. Can also employ CPU CFS.
 - Containers can be pinned to specific CPU cores (using `--cpuset`).
 - CPU resources are controlled through soft limits. The limit is actually only
-	enforced if there is resource contention.
+  enforced if there is resource contention.
 - Memory resources use hard limits. Specifying more memory than is available on
-	the systems will allow swapping.
+  the systems will allow swapping.
 - Swap can be set separately, or disabled with `--memory-swap=-1`.
 - Linux OOM will prevent containers from allocating more memory than they are
-	allowed. This can be disabled.
+  allowed. This can be disabled.
 - Block IO can explicitly be limited.
 
 `docker update` can be used to update container resource settings in real-time.
@@ -210,38 +209,38 @@ Examples
 
 - Run a new Centos 6 based container and have it execute a command.
 
-      > docker run centos:6 /bin/echo "Oh hai"
+        docker run centos:6 /bin/echo "Oh hai"
 
 - Launch with a interactive shell.
 
-      > docker run --interactive --tty centos:6 /bin/bash
+        docker run --interactive --tty centos:6 /bin/bash
 
 - View running Docker containers and all containers (created, running, stopped,
-	etc.).
+  etc.).
 
-      > docker ps
-      > docker ps --all
+        docker ps
+        docker ps --all
 
 - View the standard output of a Docker container.
 
-      > docker logs <container-id>
+        docker logs <container-id>
 
 - Attach to a running Docker container.
 
-      > docker attach <container-id>
+        docker attach <container-id>
 
 - Delete all containers.
 
-      > docker rm $(docker ps --all --quiet)
+        docker rm $(docker ps --all --quiet)
 
 - Delete all images.
 
-      > docker rmi $(docker images --quiet --filter "dangling=true")
+        docker rmi $(docker images --quiet --filter "dangling=true")
 
 - Show all files that have changed within the containers since build.
 
-      > docker diff <container-id>
+        docker diff <container-id>
 
 - Follow the logs of an actively running container.
 
-			> docker logs --follow <container-id>
+        docker logs --follow <container-id>

@@ -26,12 +26,12 @@ this:
 
 1.  Can I try this problem in C?
 2.  Try it in C, anyway.
-3.  If time_elapsed >= 10 hours or I have to make some weird data structure:
-4.    Well, this is stressful.
-5.    Try it in Python.
-6.  Try to work out some performance bottleneck or edge case.
-7.  Goto 3 as necessary..
-8.  Write it in Erlang because writing Python after C makes me feel like a
+3.  If time elapsed > 10 hours or I have to make some weird data structure:
+    1.  Well, this is stressful.
+    2.  Try it in Python.
+4.  Work out some performance bottleneck or edge case, usually with types.
+5.  Goto 3, as necessary.
+6.  Write it in Erlang because writing Python after C makes me feel like a
     hack-fraud and I want to feel alive again.
 
 ## Bro, do you even tail-call optimize?
@@ -218,4 +218,4 @@ realtively short amount of time.
 
 [^1]: Joe Armstrong, "History of Erlang", in HOPL III: Proceedings of the third ACM SIGPLAN conference on History of programming languages
 
-[^2]: "Erlang: The Movie" https://www.youtube.com/watch?v=xrIjfIjssLE
+[^2]: "Erlang: The Movie" <https://www.youtube.com/watch?v=xrIjfIjssLE>

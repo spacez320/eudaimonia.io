@@ -14,20 +14,20 @@ Usage
 First, initialize the local environment. This creates `.terraform`, and
 downloads default providers.
 
-    $ terraform init
+    terraform init
 
 Before applying changes, Terraform must build an execution plan, which will
 show you what will be created, destroyed, or changed.
 
-    $ terraform plan
+    terraform plan
 
 This command will apply changes.
 
-    $ terraform apply
+    terraform apply
 
 Afterwards, you can view the new state of provisioned resources.
 
-    $ terraform show
+    terraform show
 
 Configuration
 -------------
@@ -84,7 +84,7 @@ Resources
 
   Check providers in current Terraform code with: 
 
-      $ terraform providers
+      terraform providers
 
   Custom providers must be placed within `terraform.d/plugins/<arch>`.
 
@@ -199,7 +199,7 @@ in order to view, or to provide input to other resources..
 New output modules need a `terraform apply` in order to be available.
 Afterwards:
 
-    $ terraform output an_output
+    terraform output an_output
     [something]
 
 Output values can also conveniently show all values within a map or list.
@@ -236,7 +236,7 @@ Terraform where to retrieve it from (locally, Git, HTTP, etc.).
 
 Aftewards, you'll need to perform the module retrieval.
 
-    $ terraform get
+    terraform get
 
 To update modules, use the `-update` flag.
 
