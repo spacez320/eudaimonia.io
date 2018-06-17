@@ -216,6 +216,5 @@ and readability. I've seen quite a few coworkers pick up Python as a first and
 subsequent language, and almost always they are productive with it in a
 realtively short amount of time.
 
-[^1]: Joe Armstrong, "History of Erlang", in HOPL III: Proceedings of the third ACM SIGPLAN conference on History of programming languages
-
-[^2]: "Erlang: The Movie" <https://www.youtube.com/watch?v=xrIjfIjssLE>
+[^1]: Joe Armstrong. "History of Erlang," in HOPL III: Proceedings of the third ACM SIGPLAN conference on History of programming languages.
+[^2]: "Erlang: The Movie" <https://www.youtube.com/watch?v=xrIjfIjssLE>.

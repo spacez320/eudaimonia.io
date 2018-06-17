@@ -134,6 +134,18 @@ time {
   font-style: italic;
 }
 
+.footnotes {
+  border-top: 1px $gray solid;
+  padding-top: 1em;
+
+  ol {
+    font-size: 0.9em;
+    list-style-position: outside;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}
+
 // Tablet, Desktop
 @media (min-width: 700px) {
   .top-header {
