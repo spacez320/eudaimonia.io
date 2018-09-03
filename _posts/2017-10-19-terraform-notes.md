@@ -67,10 +67,10 @@ State
 
 When creating resources, Terraform will create a `.tfstate` file that matches
 metadata to resources on the provider. If sharing a state file, it should be
-stored remotely, which also protects secrets in the state file.
+stored remotely, which also protects secrets in that state file.
 
 *State locking* can facilitate multiple people building on the same Terraform
-provider, and prevents double-writing. The implemented back-end must support
+provider and prevents double-writing. The implemented back-end must support
 this.
 
 Terraform state can be segregated into *workspaces*. The current workspace can
@@ -87,7 +87,6 @@ Resources
       terraform providers
 
   Custom providers must be placed within `terraform.d/plugins/<arch>`.
-
   Multiple providers of the same name can be defined and are distinguished by
   the `alias` parameter.
 
@@ -156,7 +155,8 @@ Variables can be interpolated into strings.
       size = "${var.foo}"
     }
 
-Variable assignments can be generated from, in order of preference:
+Variable assignments can be generated from the following, in order of
+preference:
 
 - Command line `-var` arguments.
 - From a file, `terraform.tfvars` or `*.auto.tfvars`, or files matching the
@@ -168,7 +168,6 @@ Variable assignments can be generated from, in order of preference:
 Terraform has lists.
 
     variable "my_list" { default = ["a", "b"] }
-
     "${var.my_list[0]}"
 
 Terraform has maps.
@@ -180,7 +179,6 @@ Terraform has maps.
         "fizz" = "buzz"
       }
     }
-
     "${var.my_map["foo"]}"
 
 You can also use the `lookup` function to fetch a variable key. Maps are useful
@@ -190,7 +188,7 @@ Output Variables
 ----------------
 
 **Outputs** define a way to extract specific information from Terraform state
-in order to view, or to provide input to other resources..
+in order to view, or to provide input to other resources.
 
     output "an_output" {
       value = "${foo.bar.bizz}"
@@ -214,8 +212,8 @@ resources.  Available options include `local-exec` that runs a local command,
 or others like Salt.
 
 Provisioners only run on resource creation, and are meant for bootstrapping
-(vs.  configuration management). If a provisioning step fails, the resource
-will be marked *tainted* and recreated upon the next apply.
+(vs. configuration management). If a provisioning step fails, the resource will
+be marked *tainted* and recreated upon the next apply.
 
 *Destroy provisioners* are available to run upon resource destruction. They
 should be idempotent as they will run again after failure.

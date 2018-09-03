@@ -3,12 +3,12 @@ layout: post
 title: Creating your own Vagrant base box
 ---
 
-[Vagrant](https://www.vagrantup.com/) is a tool that allows the individual
+[Vagrant](https://www.vagrantup.com/) is a tool that allows an individual
 developer to easily work within a standardized environment that is built
 specifically for their application or platform. Base boxes are a useful feature
-of Vagrant that introduce extensibility into their build process, and I want to
-talk about the motivations and nuances behind using them, especially for the
-lone developer.
+of Vagrant that introduce extensibility into a Vagrant build process and I
+want to talk about the motivations and nuances behind using them, especially
+for the lone developer.
 
 ## Why use Vagrant at all?
 
@@ -16,36 +16,38 @@ The VirtualBox + Vagrant combination is a really convenient and clean way to
 set up isolated environments for any project you want to develop and test
 locally.
 
-Why convenient? You can easily reproduce the setup you need to work reliably on
-your project, which can help if you walk away from it for a while or move to
-another machine [^2]. Once you get it working once, you can be reasonably sure it
-will work every time you `vagrant up`.
+Why convenient? You can easily reproduce any setup you need to do in order to
+work reliably on your project, which can help if you walk away from it for a
+while or move to another machine [^2]. Once you get it working once, you can be
+reasonably sure it will work every time you `vagrant up`.
 
-Why clean? You don't pollute your workstation with install dependencies.
+Why clean? You don't pollute your workstation directly with install
+dependencies.
   
-Obviously this is useful for teams who want help standardizing their workflow
-across multiple devs, but I also find it useful for my own, lonesome endeavors.
+Obviously this is useful for teams who want to standardize their workflow
+across multiple developers, but I also find it useful for my own, lonesome
+endeavors.
 
-## Why build a base box? The problem with out-of-the-box Vagrant.
+## Why build a base box? The problem with out-of-the-box Vagrant
 
 Some aspects of Vagrant can be cumbersome to deal with at setup time, and some
 of the issues can be dependent on the platform you run it on. These
-instructions will talk about [VirtualBox](https://www.virtualbox.org/) -- this
-arguably being the easiest VM engine to get running quickly.
+instructions will talk about [VirtualBox](https://www.virtualbox.org/), which
+is arguably the easiest VM engine to get running quickly.
 
-Some examples of this include:
+Some examples of things you have to figure out include:
 
 - Upgrading system packages.
-- Constantly having to download `-devel` and libraries.
+- Having to download `-devel` libraries to build applications.
 - Setting up networking appropriately.
-- Installing guest additions (VirtualBox specific, but absolutely necessary).
+- Installing Guest Additions (VirtualBox specific, but absolutely necessary).
 - Anything else you want all your Vagrant machines to have at setup time.
 
 The key benefits of making your own base box have to do with solving all of
 these issues just once and lowering the amount of time it takes to start new
 projects with Vagrant.
 
-## Setting up your base box.
+## Setting up your base box
 
 As with any Vagrant project, you have to start with a `Vagrantfile`, and the
 initialization command is a good place to start.
@@ -71,29 +73,29 @@ Even though we are making our own box, you still need to start from somewhere.
 
 There are lots of machines available to you in the [**Vagrant
 Atlas**](https://atlas.hashicorp.com/boxes/search?vagrantcloud=1) that come in
-flavors you like. Since I prefer to work in Fedora, I based mine off of the
+flavors you may like. Since I prefer to work in Fedora, I based mine off of the
 officially supported [`fedora/23-cloud-base`](https://atlas.hashicorp.com/fedora/boxes/23-cloud-base/)[^1][^4].
 
 
 **2. Decide what your base box needs.**
 
-Here is where you come up with a plan of what to add/remove/change to craft
+Here is where you'll come up with a plan of what to add/remove/change to craft
 your base box. For example, some common things I want to do are getting
 system-wide packages up to date and installing utilities that most of the
 platforms I work in (Ruby, Python, etc.) usually need for even the most basic
 of projects.
 
 ```
-# this will go in your `Vagrantfile`
+# This will go in your `Vagrantfile`.
 
 config.vm.provision "shell" do |s|
   s.inline = <<-SHELL
 
-# upgrade existing system, excluding the kernel
+# Upgrade the existing system, excluding the kernel.
 sudo dnf -y makecache
 sudo dnf -y upgrade --exclude='kernel-core'
 
-# install some necessary packages for building ... well, anything
+# Install some necessary packages for building ... well, anything.
 sudo dnf -y install gcc kernel-devel-`uname-r` make rpm-build
 
   SHELL
@@ -101,9 +103,9 @@ end
 ```
 
 We do a couple of things here: installing compilers, development headers, build
-tools, etc. This is pretty essentially for things like Python's `pip` and
-Ruby's `bundle` to work properly. As you develop on more platforms, you may
-find you need to add to this list.
+tools, etc. This is pretty essential for things like Python's `pip` and Ruby's
+`bundle` to work properly. As you develop on more platforms, you may find you
+need to add to this list.
 
 Upgrading is just cool, but I exclude the kernel in order to avoid any kernel
 dependent things downstream from requiring a restart, which you can't script
@@ -111,18 +113,18 @@ into the Vagrantfile.
 
 **3. Fix things that are VM platform specific.**
 
-For VirtualBox, the big thing here is to install Guest Additions. Without GA,
+For VirtualBox, the big thing here is to install Guest Additions. Without it,
 your shared `/vagrant` directory will not automatically sync -- a huge
-headache.
+headache for local development.
 
 ```
-# more provisioner logic in your `Vagrantfile`, which should be merged with
-# what you may already have
+# This is more provisioner logic in your `Vagrantfile`, which should be merged
+# with what you may already have.
 
 config.vm.provision "shell" do |s|
   s.inline = <<-SHELL
 
-# install Guest Additions
+# Install Guest Additions.
 sudo dnf -y install wget
 wget --quiet http://download.virtualbox.org/virtualbox/5.0.18/VBoxGuestAdditions_5.0.18.iso
 sudo mkdir --parents /media/VBoxGuestAdditions
@@ -134,18 +136,19 @@ end
 ```
 
 This is one of the reasons why you want to keep the kernel version held back.
-GA's functionality comes from kernel modules, which have to be buildable and
-loadable. The limbo period between upgrading a kernel and restarting makes this
-impossible and breaks your build.
+Guest Additions's functionality comes from kernel modules, which have to be
+buildable and loadable. The limbo period between upgrading a kernel and
+restarting makes this impossible and breaks your build.
 
 Another thing that I've found with VirtualBox is that you have to modify the VM
 to use the host's DNS resolvers. Without this, it won't be able to access the
 named internet easily and probably breaks most application build tools. I'm not
-sure why or even if this is still a problem, but it's easily fixable.
+sure why this occurs or even if this is still a problem, but it's easily
+fixable by NAT'ing DNS resolution to your host machine.
 
 ```
 config.vm.provider "virtualbox" do |vb|
-  # resolve DNS requests through NAT'ing
+  # Resolve DNS requests through NAT'ing.
   vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 end
 ```
@@ -170,13 +173,13 @@ Vagrant's utilities take over from here, and this is largely a repeat of what
 is available in Vagrant's documentation.
 
 The first step is to create the box from the machine you've defined in the
-`Vagrantfile`. This involves building the box like you normally would, and then
+`Vagrantfile`. This involves building the box like you normally would and then
 packaging it from the live instance.
 
 ```
 matthew@xerces my-base-box $ vagrant up
 
-# go get some coffee, because this takes a while
+# Go get some coffee, because this takes a while.
 ```
 
 Vagrant will run through all the setup steps you've defined. The machine should
@@ -191,7 +194,7 @@ default                   running (virtualbox)
 ```
 
 Now you can package the instance into your base box, and to do this we need the
-VM's VirtualBox id, which is randomly generated by Vagrant.
+VM's VirtualBox ID, which is randomly generated by Vagrant.
 
 ```
 matthew@xerces my-base-box $ VBoxManage list runningvms
@@ -200,7 +203,7 @@ matthew@xerces my-base-box $ VBoxManage list runningvms
 ```
 
 Here, `vagrant_default_1463323796124_26612` is what we want. Your specific box
-id will obviously be different. Time to package.
+ID will obviously be different. Time to package.
 
 ```
 matthew@xerces my-base-box $ vagrant package vagrant-default_1463323796124_26612

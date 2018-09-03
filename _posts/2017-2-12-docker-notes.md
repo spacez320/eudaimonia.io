@@ -4,10 +4,8 @@ title: Docker notes
 categories: notes
 ---
 
-The following are notes on how Docker works and is administrated.
-
-Docker provides the following improvements to applications and their
-life-cycles:
+The following are notes on how Docker works and is administrated. Docker
+provides the following improvements to applications and their life-cycles:
 
 - Forcing applications to be more ephemeral as containers are quickly destroyed
   and recreated.
@@ -33,9 +31,7 @@ Docker employs the following:
   usage, and etc.
 
 Docker also uses a container format backend. The default is libcontainer, but
-it can also use LXC.
-
-Docker is made up of the following components:
+it can also use LXC. Docker is made up of the following components:
 
 - **Docker Registry** - storage for Docker Images, Docker Hub being the public
   one.
@@ -51,10 +47,9 @@ Docker is made up of the following components:
 - **Dockerfile** - a set of instructions in a file that builds an image.
 
 Dockerfiles create a Docker image which create a Docker Container which runs on
-a Docker server.
-
-Docker images are created into containers (docker create) and then started
-(docker start). These operations are combined with docker run.
+a Docker server. Docker images are created into containers (`docker create`)
+and then started (`docker start`). These operations are combined with `docker
+run`.
 
 ## Images
 
@@ -65,10 +60,8 @@ Creating images can be done in the following ways:
 - Building from a Dockerfile.
 
 Committing changes to an image involves running a container from the image, and
-executing a `docker commit`.
-
-Dockerfiles are configuration files that create images with `docker build`
-commands.
+executing a `docker commit`. Dockerfiles are configuration files that create
+images with `docker build` commands.
 
 - Build context refers to the current directory the build occurs in, the
   contents of which are uploaded to the image.
@@ -87,13 +80,11 @@ available image being referenced. Specific references can also be pulled.
 Containers can use inheritable key/value metadata which are useful for
 container filtering.
 
-  docker run --detach --name test_labels --label="foo=bar" --label="fizz=buzz" centos:latest sleep 1000
-  docker ps --filter="label=foo=bar"
+    docker run --detach --name test_labels --label="foo=bar" --label="fizz=buzz" centos:latest sleep 1000
+    docker ps --filter="label=foo=bar"
 
 Stopped containers will remain registered unless they are deleted or given the
-`--rm` flag at runtime.
-
-Containers can be given at runtime:
+`--rm` flag at runtime. Containers can be given at runtime:
 
 - Environment variables, `--env`.
 - DNS, `--dns` and `--dns-search`.
@@ -108,13 +99,17 @@ writeable using `--tmpfs` options.
 
 Restart behavior can be 'disabled', 'on-failure', and 'always':
 
-    docker run --restart=on-failure:3 ... # will attempt to restart a badly exiting instance up to three times.
+    # Will attempt to restart a badly exiting instance up to three times.
+    docker run --restart=on-failure:3 ...
 
 When a container is stopped, its inner processes exit. Docker containers
 respond to signals like `SIGTERM` and `SIGKILL`.
 
-    docker stop --timeout 3 ...  # will attempt to SIGTERM until 30 seconds have passed, and then SIGKILL
-    docker kill --signal USR1 ... # will send a USR1 signal
+    # Will attempt to SIGTERM until 30 seconds have passed, and then SIGKILL.
+    docker stop --timeout 3 ... 
+
+    # Will send a USR1 signal.
+    docker kill --signal USR1 ...
 
 Containers can also be paused. This keeps their runtime in memory, preserves
 open handles, but stops the container from being CPU scheduled.
@@ -125,8 +120,8 @@ using docker inspect.
     docker inspect abcdefg123...
 
 Attaching to running containers can be done using an `exec` subcommand, or
-tools that interactive with Linux namespaces, assuming that the container can
-host the command you are attempting..
+tools that interact with Linux namespaces, assuming that the container can host
+the command you are attempting.
 
     docker exec --tty --interactive acdefg123... /bin/bash
 

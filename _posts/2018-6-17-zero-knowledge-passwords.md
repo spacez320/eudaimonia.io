@@ -5,29 +5,29 @@ deckhead: A guide to simple and effective password hygiene.
 ---
 
 Passwords can be a sensitive, confusing topic. They're like opinions --
-everyone's got one, and specifically it seems like everyone's got opinions on
-how passwords should be managed. Here I try to outline the reasoning around how
-I think about passwords, and how to easily avoid bad habits.
+everyone's got one, and specifically opinions on how passwords should be
+managed. Here I try to outline the reasoning around how I think about
+passwords, and how to easily avoid bad habits.
 
-Ivory towers hang banners that say we need give up and find a way to get to the
-post-password world [^1], but for most people on the ground that doesn't help
-much.  Meanwhile what we're told to do is inconsistent. While your banking
-website declares that the only secure password is one that has twelve letters,
-at least three capitals, a math equation, and a prime number, your phone (which
-might have your bank's app on it) only wants you to move your thumb in a
-certain direction to unlock it. 
+## Presenting the problem
+
+You may have noticed that what we're told about passwords is inconsistent.
+While your banking website declares that the only secure password is one that
+has twelve letters, at least three capitals, a math equation, and a prime
+number, your phone (which might have your bank's app on it) only wants you to
+move your thumb in a certain direction to unlock it. Ivory towers hang banners
+that say we need give up and find a way to get to the post-password world [^1],
+but for most people on the ground that doesn't help much. 
 
 Despite the confusion, it's a pretty common message that passwords are one of
-those things that most people should better manager [^8], but it's really hard
-to even know what "better" means, or what the risk really is. So we easily
-commit cardinal sins like using the same password for everything, or using a
-password that's simple because it's easy to remember, or using a password that
-has your birthday in it -- all no good.
+those things that most people should better manage [^8], but it's really hard
+to even know what "better" means, or what the risk really is. Meanwhile, many
+of us commit cardinal sins like using the same password for everything, or
+using a password that's simple because it's easy to remember, or using a
+password that has your birthday in it -- all of which are clearly wrong.
 
 As it turns out, doing the right thing with your password management really
 boils down to a very clear set of rules.
-
-Ready? Here they are:
 
 <ol style="text-align:center">
 <li>Make your password long.</li>
@@ -50,7 +50,7 @@ So what do these two rules actually solve?
 
 At the end of the day, a password is a secret shared between you and someone
 else that should stop anyone but you from interacting with them. The most
-common problems come up when someone guesses your password, or learns about it
+common problems appear when someone guesses your password, or learns about it
 directly from the other party [^2] [^3]. Both of these events happen all the
 time; malicious people on the internet write software designed to rapidly guess
 passwords and major password leaks make the news every few months or so. In
@@ -85,8 +85,9 @@ cracking software could probably guess `azbycx` in about *10 milliseconds*
 using this strategy.
 
 > Most websites will introduce limits that artificially slow down password
-guessing and prevent this type of attack, but I think it's good to not fully
-rely on assumptions of security.
+guessing and prevent this type of attack, but it's still the case that the
+complexity of your password directly correlates with the time and energy needed
+to figure it out.
 
 So what happens if we make it longer? If we add three more characters, this
 increases to *two minutes*; a nearly 10000x order of magnitude increase, but
@@ -116,23 +117,22 @@ or arguably even dictionary words. Better would be to use some random selection
 of characters, event if some repeat.
 
 To be clear, adding extra characters or capital letters is not a *bad* idea, it
-also ultimately makes your password more difficult to guess because it
-increases the number of characters a guesser has to consider. However, length
-is ultimately more important and impactful.
+ultimately makes your password more difficult to guess because it increases the
+number of characters a guesser has to consider. However, length is ultimately
+more important and impactful.
 
 ## Step two: never use the same password twice
 
 So, I'm guessing you stopped reading at the end of this section and changed
 your go-to password to be something nice and long. Good for you! Despite your
-best efforts though, today's news is mentioning that your email service just
-leaked all their userss' passwords to the internet. Frantically, you Google
+best efforts though, tomorrow's news will mention that your email service just
+leaked all their users' passwords to the internet. Frantically, you'll Google
 your password (which, by the way; don't do that) and sure enough -- it shows up
-in some list on some shady, porno ad filled website. Sad times.
+in some list on some shady website. Sad times.
 
-Now what do you do? Change it, I guess, but you use that password everywhere.
-*Everywhere.* Probably on websites you haven't been to in years. Plus, that
-password has been like a friend over the years, and your fingers know how to
-type it out effortlessly.
+The problem is that you're using that password everywhere. *Everywhere.*
+Probably on websites you haven't been to in years. That password has been like
+a life-long friend, and your fingers know how to type it effortlessly.
 
 It's probably pretty clear why using different passwords is a good idea -- if
 (and when) your password becomes public knowledge, the impact on you is limited
@@ -166,6 +166,8 @@ shell scripts to manage a file of password entries as a very simple key/value
 store. This resulted in [my GitHub project, **p**](https://github.com/spacez320/p),
 which I used for about a year before discovering something more community
 driven that filled the same role and did everything better: [**pass**](https://www.passwordstore.org/).
+
+## Using pass
 
 **pass** is, at its heart, a CLI tool that makes it very easy to keep all my
 passwords with me, and add/change/retrieve all my passwords at any time.
@@ -209,47 +211,43 @@ Here's the setup I use now.
 - Each time I log into my computer, a shell script triggered by a login 
   (`.bashrc`) looks for those drives, and if it it finds one mounted, sets a
   special environment variable with its path.
-  ```
-  priv() {
-    for mount in /mnt/priv1 /mnt/priv2 /mnt/priv3; do
-      if mountpoint $mount &> /dev/null; then
-        echo $mount
-        break
-      fi
-    done
-  }
 
-  export PRIV=$(priv)
-  ```
+      priv() {
+        for mount in /mnt/priv1 /mnt/priv2 /mnt/priv3; do
+          if mountpoint $mount &> /dev/null; then
+            echo $mount
+            break
+          fi
+        done
+      }
+
+      export PRIV=$(priv)
 
 - The **pass** program can use this exported value to look for passwords in a
   specific place.
-  ```
-  export PASSWORD_STORE_DIR=$PRIV/.pass
-  ```
+
+      export PASSWORD_STORE_DIR=$PRIV/.pass
 
 - I freely add and manipulate passwords on whatever drive I happen to be using.
   In order to keep things in sync, I take advantage of the fact that **pass**
   uses Git behind the scenes. In fact, you can freely manipulate this directly
   with Git tools with the **pass** CLI tool itself.
-  ```
-  pass git status
-  ```
+
+      pass git status
 
   On a **private** (Private!!! Even though **pass** uses GPG encryption, you
   still don't want to expose the password files to the public!) remote Git
   repository, I store a master copy of my passwords and push/pull changes to
   and from whatever drive I happen to be working on.
-  ```
-  # Add that remote repository, if it's not already there.
-  pass git remote add origin <some private Git repository>
 
-  # Get passwords that I've changed elsewhere.
-  pass git pull origin master
+      # Add that remote repository, if it's not already there.
+      pass git remote add origin <some private Git repository>
 
-  # Share my changes for future me.
-  pass git push origin master
-  ```
+      # Get passwords that I've changed elsewhere.
+      pass git pull origin master
+
+      # Share my changes for future me.
+      pass git push origin master
 
 Having these drives means I can take my passwords anywhere, that I don't have
 to leave them on every computer I use, and encrypting them means I shouldn't
