@@ -10,14 +10,14 @@ I built this with:
 
 To build:
 
-    $ docker build --tag 'jekyll:latest' .
+    docker build --tag 'jekyll:latest' .
 
 To develop:
 
-    $ docker run --tty --interactive --publish-all --rm \
-        --volume `pwd`:/src/eudaimonia jekyll:latest /bin/bash
-    $ jekyll serve --livereload
+    docker run --tty --interactive --publish-all --rm \
+      --volume `pwd`:/src/eudaimonia jekyll:latest /bin/bash
+    jekyll serve --livereload
 
 To deploy:
 
-    $ aws s3 sync _site/ s3://eudaimonia.io/
+    aws s3 sync _site/ s3://eudaimonia.io/
