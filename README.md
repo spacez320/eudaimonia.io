@@ -8,15 +8,13 @@ I built this with:
   - ~~[Vagrant](https://vagrantup.com)~~ [Docker](https://www.docker.com/)
   - [AWS S3](https://aws.amazon.com/s3)
 
-To build:
-
-    docker build --tag 'jekyll:latest' .
-
 To develop:
 
-    docker run --tty --interactive --publish-all --rm \
-      --volume `pwd`:/src/eudaimonia jekyll:latest /bin/bash
-    jekyll serve --livereload
+    docker-compose up dev
+
+To build:
+
+    docker-compose up build
 
 To deploy:
 

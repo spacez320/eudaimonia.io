@@ -2,6 +2,5 @@
 .jekyll-metadata
 .sass-cache
 .vagrant
-Gemfile.lock
 _drafts
 _site

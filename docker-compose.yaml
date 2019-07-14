@@ -1,0 +1,14 @@
+version: "3"
+services:
+  dev:
+    command: jekyll serve --drafts --livereload
+    image: "jekyll/jekyll:stable"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ".:/srv/jekyll"
+  build:
+    command: jekyll build
+    image: "jekyll/jekyll:stable"
+    volumes:
+      - ".:/srv/jekyll"
